@@ -1,8 +1,5 @@
 package com.spring.boot.microservice;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +8,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.spring.boot.microservice.entity.Passport;
-import com.spring.boot.microservice.entity.Student;
+import com.spring.boot.microservice.entity.Course;
+import com.spring.boot.microservice.entity.Review;
+import com.spring.boot.microservice.entity.ReviewRating;
 
-import javassist.expr.NewArray;
 import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
@@ -31,14 +28,21 @@ public class SpringBootMainApplication implements CommandLineRunner {
 	@Override
 	@Transactional
 	public void run(String... args) throws Exception {
-		// Fetch passport from student
-		Student s = em.find(Student.class, new Long(1));
-		log.info("Retrieve Student -> {}", s);
-		log.info("Retreive Passport -> {}", s.getPassport());
-		// Fetch student from passport
-		Passport p = em.find(Passport.class, new Long(2));
-		log.info("Retrieve Passport -> {}", p);
-		log.info("Retreive Student -> {}", p.getStudent());
+		//get the existing course where id =  1
+		Course course = em.find(Course.class, 1L);
+		log.info("course.getReviews() -> {}", course.getReviews());
+		//add two reviews to it and set the relationship
+		Review review1 = new Review(ReviewRating.FIVE, "Awesome Course");
+		Review review2 = new Review(ReviewRating.FIVE, "Good Course");
+		course.addReview(review1);
+		review1.setCourse(course);
+		course.addReview(review2);
+		review2.setCourse(course);
+		
+		//save it to the database
+		em.persist(review1);
+		em.persist(review2);
+		
 	}
 
 }
