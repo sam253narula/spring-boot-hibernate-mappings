@@ -1,0 +1,6 @@
+applications:
+- name: spring-boot-lombok
+path: target/spring-boot-lombok-0.0.1-SNAPSHOT.jar
+domain: cfapps.io
+memory: 900M
+instances: 1
