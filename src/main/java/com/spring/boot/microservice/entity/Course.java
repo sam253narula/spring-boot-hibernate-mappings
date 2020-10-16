@@ -6,10 +6,10 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -21,8 +21,8 @@ import lombok.Data;
 @Data
 public class Course {
 
-	//private static Logger LOGGER = LoggerFactory.getLogger(Course.class);
-	
+	// private static Logger LOGGER = LoggerFactory.getLogger(Course.class);
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -30,26 +30,31 @@ public class Course {
 	@Column(nullable = false)
 	private String name;
 
-	@OneToMany(mappedBy="course")
+	@OneToMany(mappedBy = "course")
 	private List<Review> reviews = new ArrayList<>();
 //	@OneToMany(mappedBy="course", fetch = FetchType.EAGER)
 //	private List<Review> reviews = new ArrayList<>();
 
-	
+	@ManyToMany(mappedBy="courses")
+	private List<Student> students = new ArrayList<>();
+
 	@UpdateTimestamp
 	private LocalDateTime lastUpdatedDate;
 
 	@CreationTimestamp
 	private LocalDateTime createdDate;
-	
+
 	protected Course() {
+	}
+
+	public void addStudent(Student student) {
+		this.students.add(student);
 	}
 
 	public Course(String name) {
 		this.name = name;
 	}
 
-	
 //	public List<Review> getReviews() {
 //		return reviews;
 //	}
@@ -71,4 +76,3 @@ public class Course {
 		return String.format("Course[%s]", name);
 	}
 }
-

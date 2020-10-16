@@ -18,3 +18,11 @@ values(2,'FOUR', 'Wonderful Course',1);
 insert into review(id,rating,description,course_id)
 values(3,'FIVE', 'Awesome Course',2);
 
+insert into student_course(student_id,course_id)
+values(1,1);
+insert into student_course(student_id,course_id)
+values(1,2);
+insert into student_course(student_id,course_id)
+values(2,2);
+insert into student_course(student_id,course_id)
+values(2,3);

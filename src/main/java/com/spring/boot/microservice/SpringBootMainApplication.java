@@ -9,8 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.boot.microservice.entity.Course;
-import com.spring.boot.microservice.entity.Review;
-import com.spring.boot.microservice.entity.ReviewRating;
+import com.spring.boot.microservice.entity.Student;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,21 +27,24 @@ public class SpringBootMainApplication implements CommandLineRunner {
 	@Override
 	@Transactional
 	public void run(String... args) throws Exception {
-		//get the existing course where id =  1
-		Course course = em.find(Course.class, 1L);
-		log.info("course.getReviews() -> {}", course.getReviews());
-		//add two reviews to it and set the relationship
-		Review review1 = new Review(ReviewRating.FIVE, "Awesome Course");
-		Review review2 = new Review(ReviewRating.FIVE, "Good Course");
-		course.addReview(review1);
-		review1.setCourse(course);
-		course.addReview(review2);
-		review2.setCourse(course);
+		//Get a Student and his courses
+		Student student = em.find(Student.class, 1L);
+
+		log.info("student -> {}", student);
+		log.info("courses -> {}", student.getCourses());
 		
-		//save it to the database
-		em.persist(review1);
-		em.persist(review2);
+		// Insert a new Student and his Courses
+		Student aniket  = new Student("Aniket");
+		Course hibernate = new Course("Advance Hibernate");
+		em.persist(aniket);
+		em.persist(hibernate);
 		
+		//set relationship
+		aniket.addCourse(hibernate);
+		hibernate.addStudent(aniket);
+		//persist the owing side of relationship
+		em.persist(aniket);
+
 	}
 
 }
