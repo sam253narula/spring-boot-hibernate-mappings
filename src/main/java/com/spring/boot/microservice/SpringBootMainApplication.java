@@ -42,7 +42,7 @@ public class SpringBootMainApplication implements CommandLineRunner {
 		//set relationship
 		aniket.addCourse(hibernate);
 		hibernate.addStudent(aniket);
-		//persist the owing side of relationship
+		//persist
 		em.persist(aniket);
 
 	}
