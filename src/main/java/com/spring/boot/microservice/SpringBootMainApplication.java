@@ -1,5 +1,8 @@
 package com.spring.boot.microservice;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +11,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.spring.boot.microservice.entity.Course;
-import com.spring.boot.microservice.entity.Student;
+import com.spring.boot.microservice.entity.Employee;
+import com.spring.boot.microservice.entity.FullTimeEmployee;
+import com.spring.boot.microservice.entity.PartTimeEmployee;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,24 +31,19 @@ public class SpringBootMainApplication implements CommandLineRunner {
 	@Override
 	@Transactional
 	public void run(String... args) throws Exception {
-		//Get a Student and his courses
-		Student student = em.find(Student.class, 1L);
-
-		log.info("student -> {}", student);
-		log.info("courses -> {}", student.getCourses());
 		
-		// Insert a new Student and his Courses
-		Student aniket  = new Student("Aniket");
-		Course hibernate = new Course("Advance Hibernate");
-		em.persist(aniket);
-		em.persist(hibernate);
+		//Insert an employee
+		Employee sam  = new PartTimeEmployee("Sam", new BigDecimal(5000));
+		Employee aniket  = new FullTimeEmployee("Aniket", new BigDecimal(180000));
 		
-		//set relationship
-		aniket.addCourse(hibernate);
-		hibernate.addStudent(aniket);
-		//persist
+		
 		em.persist(aniket);
-
+		em.persist(sam);
+		
+		//Retrieve all employees
+		List<Employee> employees  = em.createQuery("select e from Employee e", Employee.class).getResultList();
+		log.info("Employees -> {}",employees);
+		
 	}
 
 }
