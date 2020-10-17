@@ -12,10 +12,10 @@ import javax.persistence.MappedSuperclass;
 
 import lombok.Data;
 
-//@MappedSuperclass
-@Entity
+@MappedSuperclass
+//@Entity
 @Data
-@Inheritance(strategy = InheritanceType.JOINED)
+//@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Employee {
 
 	@Id

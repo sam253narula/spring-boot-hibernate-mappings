@@ -42,15 +42,15 @@ public class SpringBootMainApplication implements CommandLineRunner {
 		em.persist(sam);
 		
 		//Retrieve all employees
-		List<Employee> employees  = em.createQuery("select e from Employee e", Employee.class).getResultList();
-		log.info("Employees -> {}",employees);
+//		List<Employee> employees  = em.createQuery("select e from Employee e", Employee.class).getResultList();
+//		log.info("Employees -> {}",employees);
 		
 		//For @MappedSuperclass option below:
-//		List<PartTimeEmployee> partTimeEmployee  = em.createQuery("select e from PartTimeEmployee e", PartTimeEmployee.class).getResultList();
-//		log.info("PartTimeEmployee -> {}",partTimeEmployee);
-//		
-//		List<FullTimeEmployee> fullTimeEmployee  = em.createQuery("select e from FullTimeEmployee e", FullTimeEmployee.class).getResultList();
-//		log.info("FullTimeEmployee -> {}",fullTimeEmployee);
+		List<PartTimeEmployee> partTimeEmployee  = em.createQuery("select e from PartTimeEmployee e", PartTimeEmployee.class).getResultList();
+		log.info("PartTimeEmployee -> {}",partTimeEmployee);
+		
+		List<FullTimeEmployee> fullTimeEmployee  = em.createQuery("select e from FullTimeEmployee e", FullTimeEmployee.class).getResultList();
+		log.info("FullTimeEmployee -> {}",fullTimeEmployee);
 	}
 
 }
