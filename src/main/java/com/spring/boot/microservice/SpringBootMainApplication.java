@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.MappedSuperclass;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -44,6 +45,12 @@ public class SpringBootMainApplication implements CommandLineRunner {
 		List<Employee> employees  = em.createQuery("select e from Employee e", Employee.class).getResultList();
 		log.info("Employees -> {}",employees);
 		
+		//For @MappedSuperclass option below:
+//		List<PartTimeEmployee> partTimeEmployee  = em.createQuery("select e from PartTimeEmployee e", PartTimeEmployee.class).getResultList();
+//		log.info("PartTimeEmployee -> {}",partTimeEmployee);
+//		
+//		List<FullTimeEmployee> fullTimeEmployee  = em.createQuery("select e from FullTimeEmployee e", FullTimeEmployee.class).getResultList();
+//		log.info("FullTimeEmployee -> {}",fullTimeEmployee);
 	}
 
 }
